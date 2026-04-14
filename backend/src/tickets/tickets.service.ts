@@ -57,14 +57,12 @@ export class TicketsService {
             {
               title: {
                 contains: q.trim(),
-                mode: 'insensitive' as const,
               },
             },
             {
               createdBy: {
                 email: {
                   contains: q.trim(),
-                  mode: 'insensitive' as const,
                 },
               },
             },
@@ -72,7 +70,6 @@ export class TicketsService {
               createdBy: {
                 name: {
                   contains: q.trim(),
-                  mode: 'insensitive' as const,
                 },
               },
             },

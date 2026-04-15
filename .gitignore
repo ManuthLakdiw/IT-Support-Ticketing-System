@@ -1,1 +1,9 @@
+# Editor
 .idea
+.vscode
+
+# Environment files — contain secrets, never commit these
+.env
+.env.*
+.env.local
+.env.*.local

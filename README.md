@@ -9,6 +9,7 @@
   <img src="https://img.shields.io/badge/License-Unlicensed-94a3b8?style=for-the-badge" alt="License" />
   <img src="https://img.shields.io/badge/Type-Full--Stack-6366f1?style=for-the-badge&logo=stackshare&logoColor=white" alt="Type" />
   <img src="https://img.shields.io/badge/Purpose-Portfolio-f59e0b?style=for-the-badge&logo=bookstack&logoColor=white" alt="Purpose" />
+  <img src="https://img.shields.io/badge/Docker-Hub-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker Hub" />
 </p>
 
 <p align="center">
@@ -26,10 +27,10 @@
 > **Looking for technical details, setup instructions, or API endpoints?**
 > Please refer to the dedicated documentation for each part of the system:
 >
-> | Part | README |
-> |------|--------|
-> | 🖥 **Frontend** — Next.js App, UI components, environment variables & routes | [**→ View Frontend README**](./frontend/README.md) |
-> | ⚙️ **Backend** — NestJS API, database setup, API endpoints & seed credentials | [**→ View Backend README**](./backend/README.md) |
+> | Part | README | Docker Hub |
+> |------|--------|------------|
+> | 🖥 **Frontend** — Next.js App, UI components, environment variables & routes | [**→ View Frontend README**](./frontend/README.md) | [`manuthlakdiw/ticketing-frontend:v1`](https://hub.docker.com/r/manuthlakdiw/ticketing-frontend) |
+> | ⚙️ **Backend** — NestJS API, database setup, API endpoints & seed credentials | [**→ View Backend README**](./backend/README.md) | [`manuthlakdiw/ticketing-backend:v1`](https://hub.docker.com/r/manuthlakdiw/ticketing-backend) |
 
 ---
 
@@ -94,6 +95,7 @@ The goal was not just to build a CRUD app — it was to build a system that enfo
 <p align="left">
   <img src="https://img.shields.io/badge/Node.js_v18+-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js" />
   <img src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white" alt="npm" />
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" />
   <img src="https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white" alt="ESLint" />
   <img src="https://img.shields.io/badge/Prettier-F7B93E?style=for-the-badge&logo=prettier&logoColor=black" alt="Prettier" />
   <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" alt="Git" />
@@ -128,6 +130,79 @@ IT-Support-Ticketing-System/
 ```
 
 For a complete breakdown of the internal file structure of each project, please refer to the **Project Structure** sections in their respective README files.
+
+---
+
+## 🐳 Docker Quick Start
+
+The fastest way to run the full system — **no Node.js, no build steps required**. Both images are published to Docker Hub and can be pulled and started in minutes.
+
+### Pull the Images
+
+```bash
+docker pull manuthlakdiw/ticketing-backend:v1
+docker pull manuthlakdiw/ticketing-frontend:v1
+```
+
+| Image | Docker Hub | Default Port |
+| ----- | ---------- | :----------: |
+| `manuthlakdiw/ticketing-backend:v1` | [→ View on Docker Hub](https://hub.docker.com/r/manuthlakdiw/ticketing-backend) | `3000` |
+| `manuthlakdiw/ticketing-frontend:v1` | [→ View on Docker Hub](https://hub.docker.com/r/manuthlakdiw/ticketing-frontend) | `3001` |
+
+### Run with Docker Compose
+
+Create a `docker-compose.yml` in any directory with the following content. The images are pulled automatically — no local clone needed.
+
+> ⚠️ **Before running:** Replace the `DB_*` and `JWT_SECRET` placeholder values with your real credentials. The backend connects to your **host machine's local database** via `host.docker.internal`.
+
+```yaml
+services:
+
+  backend:
+    image: manuthlakdiw/ticketing-backend:v1
+    container_name: ticketing_backend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DB_HOST: host.docker.internal
+      DB_USER: root
+      DB_PASSWORD: your_db_password_here
+      DB_NAME: ticketing_db
+      DATABASE_URL: "mysql://root:your_db_password_here@host.docker.internal:3306/ticketing_db?allowPublicKeyRetrieval=true"
+      JWT_SECRET: "your_strong_jwt_secret_here"
+      JWT_EXPIRES_IN: "7d"
+      CORS_ORIGIN: "http://localhost:3001"
+
+  frontend:
+    image: manuthlakdiw/ticketing-frontend:v1
+    container_name: ticketing_frontend
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    depends_on:
+      - backend
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+      API_URL: "http://backend:3000/api"
+      NEXT_PUBLIC_API_URL: "http://localhost:3000/api"
+```
+
+Then start the entire stack with a single command:
+
+```bash
+docker compose up -d
+```
+
+The system will be available at:
+- **Frontend:** `http://localhost:3001`
+- **Backend API:** `http://localhost:3000/api`
+- **Swagger UI:** `http://localhost:3000/api/docs`
 
 ---
 

@@ -13,6 +13,7 @@ A production-ready client application built with **Next.js 14** and **TypeScript
 - [Environment Variables](#-environment-variables)
 - [Application Routes](#-application-routes)
 - [Available Scripts](#-available-scripts)
+- [Docker Deployment](#-docker-deployment)
 
 ---
 
@@ -289,6 +290,48 @@ Run all commands from the `frontend/` directory.
 | `npm run build`   | Compile and bundle for production                |
 | `npm run start`   | Start the compiled production server             |
 | `npm run lint`    | Run ESLint and report issues                     |
+
+---
+
+## 🐳 Docker Deployment
+
+<p>
+  <a href="https://hub.docker.com/r/manuthlakdiw/ticketing-frontend">
+    <img src="https://img.shields.io/badge/Docker_Hub-manuthlakdiw%2Fticke‌​ting--frontend-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker Hub" />
+  </a>
+  <img src="https://img.shields.io/badge/Image_Tag-v1-0ea5e9?style=for-the-badge" alt="v1" />
+  <img src="https://img.shields.io/badge/Port-3001-6366f1?style=for-the-badge" alt="Port 3001" />
+</p>
+
+A pre-built production image is available on Docker Hub. No local build or Node.js installation required.
+
+### Pull the Image
+
+```bash
+docker pull manuthlakdiw/ticketing-frontend:v1
+```
+
+### Run as a Standalone Container
+
+The `NEXT_PUBLIC_API_URL` variable is **critical** — it tells the browser where to send API requests. Set it to the public address of your running backend.
+
+The `API_URL` variable is used server-side (in Server Components and Route Handlers) and should use the internal Docker service name or host address of the backend.
+
+```bash
+docker run -d \
+  --name ticketing_frontend \
+  -p 3001:3001 \
+  -e NODE_ENV=production \
+  -e PORT=3001 \
+  -e NEXT_PUBLIC_API_URL=http://localhost:3000/api \
+  -e API_URL=http://localhost:3000/api \
+  manuthlakdiw/ticketing-frontend:v1
+```
+
+Once running, the application is available at:
+- **App URL:** `http://localhost:3001`
+
+> **Tip:** For running both services together, use the Docker Compose quick-start in the [Root README](../README.md#-docker-quick-start).
 
 ---
 

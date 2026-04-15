@@ -14,6 +14,7 @@ A production-ready REST API built with **NestJS** and **TypeScript** for managin
 - [API Documentation](#-api-documentation)
 - [Default Seed Credentials](#-default-seed-credentials)
 - [Available Scripts](#-available-scripts)
+- [Docker Deployment](#-docker-deployment)
 
 ---
 
@@ -324,6 +325,54 @@ Run all commands from the `backend/` directory.
 | `npx prisma db push`    | Sync schema to the database (dev only)           |
 | `npx prisma db seed`    | Run the database seeder                          |
 | `npx prisma studio`     | Open Prisma Studio (visual DB explorer)          |
+
+---
+
+## 🐳 Docker Deployment
+
+<p>
+  <a href="https://hub.docker.com/r/manuthlakdiw/ticketing-backend">
+    <img src="https://img.shields.io/badge/Docker_Hub-manuthlakdiw%2Fticke‌​ting--backend-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker Hub" />
+  </a>
+  <img src="https://img.shields.io/badge/Image_Tag-v1-0ea5e9?style=for-the-badge" alt="v1" />
+  <img src="https://img.shields.io/badge/Port-3000-6366f1?style=for-the-badge" alt="Port 3000" />
+</p>
+
+A pre-built production image is available on Docker Hub. No local build or Node.js installation required.
+
+### Pull the Image
+
+```bash
+docker pull manuthlakdiw/ticketing-backend:v1
+```
+
+### Run as a Standalone Container
+
+The container connects to your **host machine's local MariaDB** database via `host.docker.internal`. Pass all required credentials as environment variables at runtime:
+
+```bash
+docker run -d \
+  --name ticketing_backend \
+  -p 3000:3000 \
+  --add-host=host.docker.internal:host-gateway \
+  -e NODE_ENV=production \
+  -e PORT=3000 \
+  -e DB_HOST=host.docker.internal \
+  -e DB_USER=root \
+  -e DB_PASSWORD=your_db_password_here \
+  -e DB_NAME=ticketing_db \
+  -e DATABASE_URL="mysql://root:your_db_password_here@host.docker.internal:3306/ticketing_db?allowPublicKeyRetrieval=true" \
+  -e JWT_SECRET=your_strong_jwt_secret_here \
+  -e JWT_EXPIRES_IN=7d \
+  -e CORS_ORIGIN=http://localhost:3001 \
+  manuthlakdiw/ticketing-backend:v1
+```
+
+Once running, the API is available at:
+- **Base URL:** `http://localhost:3000/api`
+- **Swagger UI:** `http://localhost:3000/api/docs`
+
+> **Tip:** For running both services together, use the Docker Compose quick-start in the [Root README](../README.md#-docker-quick-start).
 
 ---
 

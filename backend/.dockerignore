@@ -1,0 +1,36 @@
+# Dependencies — reinstalled inside the container
+node_modules
+
+# Compiled output — rebuilt inside the container
+dist
+
+# Environment files — injected at runtime via docker-compose
+.env
+.env.*
+
+# Prisma generated client — regenerated during build
+node_modules/.prisma
+
+# Tests and development tooling
+test
+**/*.spec.ts
+**/*.e2e-spec.ts
+jest.config.*
+coverage
+
+# Editor and OS artefacts
+.idea
+.vscode
+*.DS_Store
+
+# Docker files (no need to copy into the image itself)
+Dockerfile
+.dockerignore
+
+# Git
+.git
+.gitignore
+
+# Logs
+*.log
+npm-debug.log*

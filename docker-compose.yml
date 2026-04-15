@@ -1,0 +1,38 @@
+services:
+  # ── Backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ticketing_backend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    env_file:
+      - ./backend/.env
+    environment:
+      NODE_ENV: production
+      DB_HOST: host.docker.internal
+      DATABASE_URL: "mysql://${DB_USER}:${DB_PASSWORD}@host.docker.internal:3306/${DB_NAME}?allowPublicKeyRetrieval=true"
+      CORS_ORIGIN: "http://localhost:3001"
+
+  # ── Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: "${NEXT_PUBLIC_API_URL}"
+    container_name: ticketing_frontend
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    depends_on:
+      - backend
+    env_file:
+      - ./frontend/.env
+    environment:
+      NODE_ENV: production
+      PORT: 3001

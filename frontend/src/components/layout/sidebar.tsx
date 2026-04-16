@@ -128,7 +128,7 @@ export function Sidebar() {
           </div>
           {!collapsed && (
             <div className="min-w-0 overflow-hidden">
-              <p className="truncate text-sm font-bold tracking-tight text-white">IT Support</p>
+              <p className="truncate text-sm font-bold tracking-tight text-white">Check CI/CD</p>
               <p className="truncate text-[11px] text-slate-400">Ticketing System</p>
             </div>
           )}

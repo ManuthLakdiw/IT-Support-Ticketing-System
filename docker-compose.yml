@@ -36,3 +36,14 @@ services:
     environment:
       NODE_ENV: production
       PORT: 3001
+
+  # ── Watchtower (Auto-Updater) ──
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    environment:
+      - DOCKER_API_VERSION=1.44
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 60  # check dockerhub every 60 seconds for updates
+    restart: unless-stopped

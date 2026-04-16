@@ -299,7 +299,7 @@ Run all commands from the `frontend/` directory.
   <a href="https://hub.docker.com/r/manuthlakdiw/ticketing-frontend">
     <img src="https://img.shields.io/badge/Docker_Hub-manuthlakdiw%2Fticke‌​ting--frontend-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker Hub" />
   </a>
-  <img src="https://img.shields.io/badge/Image_Tag-v1-0ea5e9?style=for-the-badge" alt="v1" />
+  <img src="https://img.shields.io/badge/Image_Tag-latest-0ea5e9?style=for-the-badge" alt="latest" />
   <img src="https://img.shields.io/badge/Port-3001-6366f1?style=for-the-badge" alt="Port 3001" />
 </p>
 
@@ -308,7 +308,7 @@ A pre-built production image is available on Docker Hub. No local build or Node.
 ### Pull the Image
 
 ```bash
-docker pull manuthlakdiw/ticketing-frontend:v1
+docker pull manuthlakdiw/ticketing-frontend:latest
 ```
 
 ### Run as a Standalone Container
@@ -325,7 +325,7 @@ docker run -d \
   -e PORT=3001 \
   -e NEXT_PUBLIC_API_URL=http://localhost:3000/api \
   -e API_URL=http://localhost:3000/api \
-  manuthlakdiw/ticketing-frontend:v1
+  manuthlakdiw/ticketing-frontend:latest
 ```
 
 Once running, the application is available at:

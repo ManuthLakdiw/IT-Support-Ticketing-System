@@ -332,9 +332,9 @@ Run all commands from the `backend/` directory.
 
 <p>
   <a href="https://hub.docker.com/r/manuthlakdiw/ticketing-backend">
-    <img src="https://img.shields.io/badge/Docker_Hub-manuthlakdiw%2Fticke‌​ting--backend-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker Hub" />
+    <img src="https://img.shields.io/badge/Docker_Hub-manuthlakdiw%2Fticke‌​ting--backe1nd-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker Hub" />
   </a>
-  <img src="https://img.shields.io/badge/Image_Tag-v1-0ea5e9?style=for-the-badge" alt="v1" />
+  <img src="https://img.shields.io/badge/Image_Tag-latest-0ea5e9?style=for-the-badge" alt="latest" />
   <img src="https://img.shields.io/badge/Port-3000-6366f1?style=for-the-badge" alt="Port 3000" />
 </p>
 
@@ -343,7 +343,7 @@ A pre-built production image is available on Docker Hub. No local build or Node.
 ### Pull the Image
 
 ```bash
-docker pull manuthlakdiw/ticketing-backend:v1
+docker pull manuthlakdiw/ticketing-backend:latest
 ```
 
 ### Run as a Standalone Container
@@ -365,7 +365,7 @@ docker run -d \
   -e JWT_SECRET=your_strong_jwt_secret_here \
   -e JWT_EXPIRES_IN=7d \
   -e CORS_ORIGIN=http://localhost:3001 \
-  manuthlakdiw/ticketing-backend:v1
+  manuthlakdiw/ticketing-backend:latest
 ```
 
 Once running, the API is available at:
